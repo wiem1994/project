@@ -1,0 +1,34 @@
+{% extends "base.html.twig" %}
+{% block title %}Conge{% endblock %}
+{% block body %}
+
+<div class="container">
+<h1 class="create">Demande de congé de {{user.nom}} {{user.prenom}} </h1>
+
+{% set foo = 1 %}
+{% for conge in conges %}
+{% if (user.id == conge.iduser) %}
+<p>demande Numéro {{foo}} <p>
+<p>{{user.nom}} {{user.prenom}} a passé une demande de congé pendant :  {{conge.nombrejour}} jours à partir du  {{conge.datedebut|date("m/d/Y")}}</p>
+<p>La demande est : {{conge.statut[0]}}</p>
+<button type="submit" id="submit_valider">Valider</button>
+<button id="submit_refuser">Refuser</button>
+<hr>
+{% set foo = foo + 1  %}
+{% endif %}
+{% endfor %}
+
+<script>
+    $(document).ready(function(){
+    $('#submit_valider').click(function() {
+        conge.status[0] = 'validée';
+        alert("done");      
+    });
+     $('#submit_refuser').click(function() {
+       conge.status[0] = 'refusée';
+    });
+});
+</script>
+{% endblock %} 
+
+

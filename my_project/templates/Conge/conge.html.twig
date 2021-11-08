@@ -1,0 +1,41 @@
+
+{% extends "base.html.twig" %}
+{% block title %}Conge{% endblock %}
+{% block body %}
+
+<div class="container">
+<h1 class="create">Veuillez remplir le formulaire de congé </h1>
+
+{{ form_start(conge) }}
+<div id="userId">
+{{ form_row(conge.iduser,{value:user.id}) }} 
+</div>
+<div class="content"> 
+{{ form_row(conge.datedebut ) }} 
+</div>
+<div class="content"> 
+{{ form_row(conge.nombrejour ) }} 
+</div>
+<div id="vka">
+{{ form_row(conge.statut) }} 
+ </div>
+<div class="content"> 
+<button type="submit" name="submit_button" id="submit_button">Ajouter</button>
+</div>
+{{ form_end(conge) }}
+
+
+<script>
+    $(document).ready(function(){
+         $('#vka').hide();
+         $('#userId').hide();   
+   
+    $('#submit_button ').click(function() {
+        alert("Votre demande a bien été enregistrée");
+       
+    });
+});
+    </script>
+
+{% endblock %} 
+

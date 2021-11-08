@@ -1,0 +1,95 @@
+
+{% extends "base.html.twig" %}
+{% block title %}Register{% endblock %}
+{% block body %}
+
+<div class="container">
+<h1 class="create">Bienvenue dans la page de l'Admin </h1>
+
+{{ form_start(User) }}
+{{ form_widget(User) }}
+<button type="submit" name="submit_button" id="submit_button">Ajouter</button>
+{{ form_end(User) }}
+
+
+<h3>La liste des utilisateurs</h3>
+
+<table width="50%" border="1" cellspacing="1" cellpadding="7">
+ 
+<tr>
+    <th>Nom</th>
+    <th>Prénom</th>
+    <th>Email</th>
+    <th>Demande de Congés</th>
+    <th>Profil</th>
+</tr>
+  {% for user in users %}
+  <tr>
+    <td>{{ user.nom|e }}</td>
+    <td>{{ user.prenom|e }}</td>
+    <td>{{ user.email|e }}</td>
+    <td>
+    {% for conge in conges %}
+    {% if ((user.id == conge.iduser) and (conge.statut[0]=='en cours')) %}
+    <a href={{path('conge_user', {'id': user.id, 'conge':conge.id})}}><button class="button">Vérifier</button></a>
+    </br>
+{% endif %}
+    {% endfor %}
+    </td>
+    <td><a href={{path('profile_user', {'id': user.id})}}><button class="button">Consulter</button></a></td>
+  </tr>
+  {% endfor %}
+</table>
+  
+</div>
+
+   <script language = "javascript" 
+      src = "https://code.jquery.com/jquery-2.2.4.min.js"></script> 
+   
+   <script language = "javascript">  
+      $(document).ready(function(){   
+       $("#submit_button").on("click", function(event){
+         //  event.preventDefault(); 
+            $.ajax({  
+               url:        '/register',  
+               type:       'POST',   
+               dataType:   'json',  
+               async:      true,  
+               
+               success: function(data, status) {  
+                  echo "done";
+                  // var e = $('<tr><th>Username</th><th>Email</th></tr>');  
+                  // $('#user').html('');  
+                  // $('#user').append(e);  
+                  
+                  // for(i = 0; i < data.length; i++) {  
+                  //    user = data[i];  
+                  //    var e = $('<tr><td id = "username"></td><td id = "email"></td></tr>');
+                     
+                  //    $('#username', e).html(user['username']);  
+                  //    $('#email', e).html(user['email']);  
+                  //    $('#user').append(e);  
+                  // }  
+               },  
+               error : function(xhr, textStatus, errorThrown) {  
+                  alert('Ajax request failed.');  
+               }  
+            });  
+      });
+      });  
+   </script> 
+
+   <style> 
+      .table { border-collapse: collapse; } 
+      .table th, td { 
+         border-bottom: 1px solid #ddd; 
+         width: 250px; 
+         text-align: left; 
+         align: left; 
+      } 
+   </style> 
+
+   <table class = "table">  
+      <tbody id = "user"></tbody>  
+   </table>     
+{% endblock %} 

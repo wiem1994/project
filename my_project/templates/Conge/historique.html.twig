@@ -1,0 +1,18 @@
+
+{% extends "base.html.twig" %}
+{% block title %}Conge{% endblock %}
+{% block body %}
+
+<div class="container">
+<h1 class="create">Historique de congé </h1>
+
+{% set foo = 1 %}
+{% for conge in conges %}
+{% if user.id == conge.iduser %}
+<p>demande Numéro {{foo}} <p>
+<p>Vous avez passé une demande de congé pendant :  {{conge.nombrejour}} jours à partir du  {{conge.datedebut|date("m/d/Y")}}</p>
+<p>votre demande est : {{conge.statut[0]}}</p>
+{% set foo = foo + 1  %}
+{% endif %}
+{% endfor %}
+{% endblock %} 

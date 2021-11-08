@@ -1,0 +1,102 @@
+composer create-project symfony/sketelon myapp "3.0.*"
+
+[Hier 12:55] Leila AJILI
+composer create-project symfony/framework-standard-edition myapp "3.4.*"
+
+
+bin/console/makeentity
+app/config/parameters.yaml
+
+
+
+composer require "twig/twig:^3.0"
+
+
+ORM create communication between DB and code 
+
+
+DATABASE_URL="mysql://wiem:123456@127.0.0.1:3306/db_name?serverVersion=5.7"
+
+
+
+
+<?php
+
+namespace App\Controller;
+
+
+if (isset($_POST['send'])) {
+    $controller = new HomeController();
+    $controller->postUser();
+}
+?>
+
+<html>
+<form method="post" action="http://localhost/wiem/myapp">
+    <div style="text-align:center;margin-top:150px;">
+        <p>Enter your first name here : </p>
+        <input type="text" name="firstname" />
+        <p>Enter your first last name here : </p>
+        <input type="text" name="lastname" />
+        <p>Enter your email here : </p>
+        <input type="text" name="email" />
+        <p>Enter your birthdate here </p>
+        <input type="date" name="birthdate" />
+        </br>
+        <input value="Send" type="submit" name="send" style="margin-top:20px;" />
+    </div>
+</form>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   /**
+     * @var \Date
+     *
+     * @ORM\Column(name="Birthdate", type="date")
+     */
+    private $birthdate;
+
+
+
+
+
+
+
+
+
+/**
+     * Set birthdate
+     *
+     * @param \Date $birthdate
+     *
+     * @return User
+     */
+    public function setBirthdate($birthdate)
+    {
+        $this->birthdate = $birthdate;
+
+        return $this;
+    }
+
+    /**
+     * Get birthdate
+     *
+     * @return \Date
+     */
+    public function getBirthdate()
+    {
+        return $this->birthdate;
+    }
