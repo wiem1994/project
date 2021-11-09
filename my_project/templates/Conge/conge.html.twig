@@ -18,12 +18,16 @@
 </div>
 <div id="vka">
 {{ form_row(conge.statut) }} 
+
  </div>
 <div class="content"> 
 <button type="submit" name="submit_button" id="submit_button">Ajouter</button>
 </div>
 {{ form_end(conge) }}
 
+{% if 'wiem@gmail.com' == app.user.email %} 
+
+{% else %}
 
 <script>
     $(document).ready(function(){
@@ -37,5 +41,6 @@
 });
     </script>
 
+{% endif %}
 {% endblock %} 
 

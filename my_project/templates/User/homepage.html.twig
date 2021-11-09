@@ -1,0 +1,7 @@
+{% extends "base.html.twig" %}
+{% block title %}Register{% endblock %}
+{% block body %}
+<a href={{path('profile_user',{'id':app.user.id})}}><h1>Bienvenue dans la page d'acceuil {{app.user.nom}} {{app.user.prenom}}</h1>
+<button type="submit" name="submit_button" id="submit_button_actualite">Voir profil </button>
+
+{% endblock %} 

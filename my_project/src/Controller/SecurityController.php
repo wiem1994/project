@@ -72,13 +72,7 @@ class SecurityController extends AbstractController
         return $this->redirectToRoute("your_profile");
     }
 
-    /**
-     * @Route("/profile", name="your_profile")
-     */
-    public function profile()
-    {
-        return $this->render('User/profile.html.twig');
-    }
+
     /**
      * @Route("/profile/{id}", name="profile_user")
      */
@@ -112,6 +106,15 @@ class SecurityController extends AbstractController
     }
 
     /**
+     * @Route("/profile", name="your_profile")
+     */
+    public function profile()
+    {
+        return $this->render('User/homepage.html.twig');
+    }
+
+
+    /**
      * @Route("/conge/{id}/{conge}", name="conge_user")
      */
     public function demandeConge($id, Conge $conge = null, Request $request)
@@ -120,7 +123,6 @@ class SecurityController extends AbstractController
             ->getRepository(User::class)
             ->find($id);
         if (is_null($conge)) {
-            dd('is null');
             $conge = new Conge();
         } else {
             // dd($conge);
@@ -136,23 +138,6 @@ class SecurityController extends AbstractController
         return $this->render('Conge/conge.html.twig', ['conge' => $form->createView(), 'user' => $user]);
     }
 
-    /**
-     * @Route("/conge/{iduser}/{idconge}", name="validate_conge")
-     */
-    // public function validerConge($iduser, $idconge)
-    // {
-    //     $user = $this->getDoctrine()
-    //         ->getRepository(User::class)
-    //         ->find($id);
-    //     $iduser = $user->getId();
-
-    //     $conge = $this->getDoctrine()
-    //         ->getRepository(Conge::class)
-    //         ->find($id);
-    //     $idconge = $conge->getId();
-
-    //     return $this->render('Conge/conge.html.twig', ['conge' => $conge, "user" => $iduser]);
-    // }
 
     /**
      * @Route("/historique/{id}", name="historique_user")

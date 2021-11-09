@@ -11,12 +11,14 @@
 <p>demande Numéro {{foo}} <p>
 <p>{{user.nom}} {{user.prenom}} a passé une demande de congé pendant :  {{conge.nombrejour}} jours à partir du  {{conge.datedebut|date("m/d/Y")}}</p>
 <p>La demande est : {{conge.statut[0]}}</p>
+
 <button type="submit" id="submit_valider">Valider</button>
 <button id="submit_refuser">Refuser</button>
 <hr>
 {% set foo = foo + 1  %}
 {% endif %}
 {% endfor %}
+
 
 <script>
     $(document).ready(function(){
@@ -29,6 +31,7 @@
     });
 });
 </script>
+
 {% endblock %} 
 
 

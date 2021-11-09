@@ -2,13 +2,13 @@
 {% extends "base.html.twig" %}
 {% block title %}Register{% endblock %}
 {% block body %}
-
+{% if 'wiem@gmail.com' == app.user.email %} 
 <div class="container">
 <h1 class="create">Bienvenue dans la page de l'Admin </h1>
 
 {{ form_start(User) }}
 {{ form_widget(User) }}
-<button type="submit" name="submit_button" id="submit_button">Ajouter</button>
+<button  name="submit_button" id="submit_button">Ajouter</button>
 {{ form_end(User) }}
 
 
@@ -48,28 +48,26 @@
    
    <script language = "javascript">  
       $(document).ready(function(){   
-       $("#submit_button").on("click", function(event){
-         //  event.preventDefault(); 
+       $("#submit_button").on("submit", function(event){
             $.ajax({  
-               url:        '/register',  
+               url:        '/admin',  
                type:       'POST',   
                dataType:   'json',  
                async:      true,  
                
                success: function(data, status) {  
                   echo "done";
-                  // var e = $('<tr><th>Username</th><th>Email</th></tr>');  
-                  // $('#user').html('');  
-                  // $('#user').append(e);  
+                  var e = $('<tr><th>Username</th><th>Email</th></tr>');  
+                  $('#user').html('');  
+                  $('#user').append(e);  
                   
-                  // for(i = 0; i < data.length; i++) {  
-                  //    user = data[i];  
-                  //    var e = $('<tr><td id = "username"></td><td id = "email"></td></tr>');
-                     
-                  //    $('#username', e).html(user['username']);  
-                  //    $('#email', e).html(user['email']);  
-                  //    $('#user').append(e);  
-                  // }  
+                  for(i = 0; i < data.length; i++) {  
+                     user = data[i];  
+                     var e = $('<tr><td id = "username"></td><td id = "email"></td></tr>');
+                     $('#username', e).html(user['username']);  
+                     $('#email', e).html(user['email']);  
+                     $('#user').append(e);  
+                  }  
                },  
                error : function(xhr, textStatus, errorThrown) {  
                   alert('Ajax request failed.');  
@@ -92,4 +90,5 @@
    <table class = "table">  
       <tbody id = "user"></tbody>  
    </table>     
+   {% endif %}
 {% endblock %} 

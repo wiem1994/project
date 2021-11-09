@@ -3,18 +3,23 @@
 
 {% block body %}
 {% if app.user %}
-<h1>Bienvenue dans votre profil {{user.nom}} {{user.prenom}}</h1>
+<h1>Bienvenue dans votre profil {{app.user.nom}} {{app.user.prenom}}</h1>
 <h3>Actualité</h3>
 {% for actuality in actualites %}
 <p>{{actuality.title}}</p>
 <p>{{actuality.content}}</p>
 {% endfor %}
 <hr>
-<button>Uploader un CV</button>
-<a href={{path('conge_user',{'id':user.id})}}><button>Demander un congé</button></a>
-<a href={{path('historique_user',{'id':user.id})}}><button>Voir historique de vos demandes de congé</button></a>
-<a href="{{path('security_logout')}}"><button>logout</button></a>
+<a href={{path('conge_user',{'id':app.user.id})}}><button>Demander un congé</button></a>
+</br>
+</br>
+<a href={{path('historique_user',{'id':app.user.id})}}><button>Voir historique de vos demandes de congé</button></a>
+</br>
+</br>
 {{form(form)}}
+</br>
+</br>
+<a href="{{path('security_logout')}}"><button>logout</button></a>
 {% else %}
 <h1>Vous n'avez pas l'accès à cette page...</h1>
 {% endif %}
