@@ -1,0 +1,12 @@
+{% extends "base.html.twig" %}
+{% block title %}Actualité{% endblock %}
+
+{% block body %}
+
+<h3>Actualité</h3>
+{% for actuality in actualites %}
+<p>{{actuality.title}}</p>
+<p>{{actuality.content}}</p>
+{% endfor %}
+{{knp_pagination_render(actualites)}}
+{% endblock %} 

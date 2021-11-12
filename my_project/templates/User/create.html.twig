@@ -2,7 +2,10 @@
 {% extends "base.html.twig" %}
 {% block title %}Register{% endblock %}
 {% block body %}
-{% if 'wiem@gmail.com' == app.user.email %} 
+
+{# {{ dump(app.user.roles) }}
+{{ dump(is_granted('ROLE_ADMIN')) }} #}
+
 <div class="container">
 <h1 class="create">Bienvenue dans la page de l'Admin </h1>
 
@@ -14,7 +17,7 @@
 
 <h3>La liste des utilisateurs</h3>
 
-<table width="50%" border="1" cellspacing="1" cellpadding="7">
+<table width="50%" border="1" cellspacing="1" cellpadding="7" class="table Pseudo">
  
 <tr>
     <th>Nom</th>
@@ -46,37 +49,27 @@
    <script language = "javascript" 
       src = "https://code.jquery.com/jquery-2.2.4.min.js"></script> 
    
-   <script language = "javascript">  
-      $(document).ready(function(){   
-       $("#submit_button").on("submit", function(event){
-            $.ajax({  
-               url:        '/admin',  
-               type:       'POST',   
-               dataType:   'json',  
-               async:      true,  
-               
-               success: function(data, status) {  
-                  echo "done";
-                  var e = $('<tr><th>Username</th><th>Email</th></tr>');  
-                  $('#user').html('');  
-                  $('#user').append(e);  
-                  
-                  for(i = 0; i < data.length; i++) {  
-                     user = data[i];  
-                     var e = $('<tr><td id = "username"></td><td id = "email"></td></tr>');
-                     $('#username', e).html(user['username']);  
-                     $('#email', e).html(user['email']);  
-                     $('#user').append(e);  
-                  }  
-               },  
-               error : function(xhr, textStatus, errorThrown) {  
-                  alert('Ajax request failed.');  
-               }  
-            });  
-      });
-      });  
-   </script> 
-
+  <script language = "javascript">
+        $(document).ready(function () {
+//form reset 
+$("input:text").val(""); 
+            $.ajax({
+                url: '{{ path('security_register') }}',
+                type: 'POST',
+                dataType: 'json',
+                async: true,
+                success: function (data) {
+                    console.log(data);
+                  //   for (i = 0; i < data.length; i++)
+                  //   {
+                  //       $('.Pseudo').append('<tr><td>' + data[i].nom + '</td></tr>'); // Filling in the lines of the table
+                        
+                  //   }
+                }
+            });
+        });
+  
+    </script> 
    <style> 
       .table { border-collapse: collapse; } 
       .table th, td { 
@@ -90,5 +83,6 @@
    <table class = "table">  
       <tbody id = "user"></tbody>  
    </table>     
-   {% endif %}
+   </br>
+<a href="{{path('security_logout')}}"><button>logout</button></a>
 {% endblock %} 

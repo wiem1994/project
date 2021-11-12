@@ -4,11 +4,6 @@
 {% block body %}
 {% if app.user %}
 <h1>Bienvenue dans votre profil {{app.user.nom}} {{app.user.prenom}}</h1>
-<h3>Actualité</h3>
-{% for actuality in actualites %}
-<p>{{actuality.title}}</p>
-<p>{{actuality.content}}</p>
-{% endfor %}
 <hr>
 <a href={{path('conge_user',{'id':app.user.id})}}><button>Demander un congé</button></a>
 </br>

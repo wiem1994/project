@@ -1,0 +1,8 @@
+//maker
+composer require --dev symfony/maker-bundle
+php bin/console make:entity
+
+
+
+
+

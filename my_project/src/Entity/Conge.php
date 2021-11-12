@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\CongeRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass=CongeRepository::class)
@@ -25,6 +27,7 @@ class Conge
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\GreaterThan("today")
      */
     private $datedebut;
 

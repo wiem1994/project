@@ -19,6 +19,15 @@ class ActualiteRepository extends ServiceEntityRepository
         parent::__construct($registry, Actualite::class);
     }
 
+    public function getActualites($length, $offset)
+    {
+        return $this->createQueryBuilder('a')
+            ->select('a')
+            ->setMaxResults($length)
+            ->setFirstResult($offset)
+            ->orderBy('a.id', 'asc')
+            ->getQuery()->getResult();
+    }
     // /**
     //  * @return Actualite[] Returns an array of Actualite objects
     //  */

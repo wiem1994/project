@@ -38,7 +38,9 @@ class RegistrationType extends AbstractType
 
                 'multiple' => true,
 
-                'label' => 'Roles'
+                'label' => 'Roles',
+
+                'empty_data' => ['ROLE_USER'],
 
             ]);
     }

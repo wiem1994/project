@@ -5,20 +5,27 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Conge;
 use App\Entity\Upload;
+use App\Form\UploadType;
 use App\Entity\Actualite;
 use App\Form\ActualiteType;
 use App\Form\CongeTypePhpType;
 use App\Form\RegistrationType;
-use App\Form\UploadType;
+use App\Repository\UserRepository;
+use App\Repository\CongeRepository;
+use App\Repository\ActualiteRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use ContainerF6n0khT\PaginatorInterface_82dac15;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class SecurityController extends AbstractController
 {
     /**
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/admin", name="security_register")
      */
     public function create(Request $request, UserPasswordEncoderInterface $encoder)
@@ -74,17 +81,30 @@ class SecurityController extends AbstractController
 
 
     /**
+     * @Route("/actualite", name="actualite")
+     */
+    public function actualite(ActualiteRepository $actualiterepo, Request $request, PaginatorInterface $paginator)
+    {
+        $donnees = $actualiterepo->findAll();
+        $actualite = $paginator->paginate(
+            $donnees,
+            $request->query->getInt('page', 1),
+            4
+        );
+        return $this->render('User/actualite.html.twig', ['actualites' => $actualite]);
+    }
+
+    /**
      * @Route("/profile/{id}", name="profile_user")
      */
-    public function profile_user($id, Request $request)
+    public function profile_user($id, Request $request, ActualiteRepository $actualiterepo)
     {
         $upload = new Upload;
-        $user = $this->getDoctrine()
+        $user = $this->getUser();
+        /*$user = $this->getDoctrine()
             ->getRepository(User::class)
-            ->find($id);
-        $actualite = $this->getDoctrine()
-            ->getRepository(Actualite::class)
-            ->findAll();
+            ->find($id);*/
+        $actualite = $actualiterepo->findAll();
         $form = $this->createForm(UploadType::class, $upload);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -142,27 +162,12 @@ class SecurityController extends AbstractController
     /**
      * @Route("/historique/{id}", name="historique_user")
      */
-    public function historique($id)
+    public function historique($id, CongeRepository $congerepo)
     {
         $user = $this->getDoctrine()
             ->getRepository(User::class)
             ->find($id);
-        $conges = $this->getDoctrine()
-            ->getRepository(Conge::class)
-            ->findAll();
+        $conges = $congerepo->findAll();
         return $this->render('Conge/historique.html.twig', ["user" => $user, "conges" => $conges]);
-    }
-    /**
-     * @Route("/valider/{id}", name="valider_conge")
-     */
-    public function validerConge($id)
-    {
-        $user = $this->getDoctrine()
-            ->getRepository(User::class)
-            ->find($id);
-        $conges = $this->getDoctrine()
-            ->getRepository(Conge::class)
-            ->findAll();
-        return $this->render('Conge/valider.html.twig', ["user" => $user, "conges" => $conges]);
     }
 }

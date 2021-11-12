@@ -16,7 +16,7 @@ class CongeTypePhpType extends AbstractType
     {
         $builder
             ->add('iduser', IntegerType::class)
-            ->add('datedebut', DateType::class, ['required'   => true, 'label' => 'Date de début de votre congé', 'widget' => 'single_text'])
+            ->add('datedebut', DateType::class, ['required'   => true, 'label' => 'Date de début de votre congé', 'widget' => 'single_text', 'years' => range(2021, 2022)])
             ->add('nombrejour', IntegerType::class, ['required'   => true, 'label' => 'Nombre de jour'])
             ->add('statut', ChoiceType::class, [
 
